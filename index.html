@@ -10,77 +10,94 @@
 </head>
 <body>
   <h1>Ingeniería Química – Malla Interactiva</h1>
-  <div class="malla-grid" id="mallaGrid">
-    <!-- Semestres generados dinámicamente por JS -->
+  <div class="malla-grid">
+    <div class="semestre" id="sem1">
+      <h2>1° Semestre</h2>
+      <div class="ramo" id="Cálculo Diferencial" onclick="aprobar('Cálculo Diferencial')">Cálculo Diferencial</div>
+      <div class="ramo" id="Álgebra y trigonometría" onclick="aprobar('Álgebra y trigonometría')">Álgebra y trigonometría</div>
+      <div class="ramo" id="Geometría euclidiana" onclick="aprobar('Geometría euclidiana')">Geometría euclidiana</div>
+      <div class="ramo" id="Química general" onclick="aprobar('Química general')">Química general</div>
+      <div class="ramo" id="Vivamos la universidad" onclick="aprobar('Vivamos la universidad')">Vivamos la universidad</div>
+      <div class="ramo" id="Lectoescritura" onclick="aprobar('Lectoescritura')">Lectoescritura</div>
+      <div class="ramo" id="Inglés 1" onclick="aprobar('Inglés 1')">Inglés 1</div>
+    </div>
+    <div class="semestre" id="sem2">
+      <h2>2° Semestre</h2>
+      <div class="ramo bloqueado" id="Cálculo integral" onclick="aprobar('Cálculo integral')">Cálculo integral</div>
+      <div class="ramo bloqueado" id="Geometría vectorial y analítica" onclick="aprobar('Geometría vectorial y analítica')">Geometría vectorial y analítica</div>
+      <div class="ramo bloqueado" id="Descubriendo la física" onclick="aprobar('Descubriendo la física')">Descubriendo la física</div>
+      <div class="ramo bloqueado" id="Introducción a la ingeniería química" onclick="aprobar('Introducción a la ingeniería química')">Introducción a la ingeniería química</div>
+      <div class="ramo bloqueado" id="Expresión gráfica para ingenieros" onclick="aprobar('Expresión gráfica para ingenieros')">Expresión gráfica para ingenieros</div>
+      <div class="ramo bloqueado" id="Química inorgánica" onclick="aprobar('Química inorgánica')">Química inorgánica</div>
+      <div class="ramo bloqueado" id="Inglés 2" onclick="aprobar('Inglés 2')">Inglés 2</div>
+    </div>
+    <div class="semestre" id="sem3">
+      <h2>3° Semestre</h2>
+      <div class="ramo bloqueado" id="Cálculo Vectorial" onclick="aprobar('Cálculo Vectorial')">Cálculo Vectorial</div>
+      <div class="ramo bloqueado" id="Álgebra lineal" onclick="aprobar('Álgebra lineal')">Álgebra lineal</div>
+      <div class="ramo bloqueado" id="Física mecánica" onclick="aprobar('Física mecánica')">Física mecánica</div>
+      <div class="ramo" id="Algoritmos y programación" onclick="aprobar('Algoritmos y programación')">Algoritmos y programación</div>
+      <div class="ramo bloqueado" id="Química orgánica" onclick="aprobar('Química orgánica')">Química orgánica</div>
+      <div class="ramo" id="Formación ciudadana y constitucional" onclick="aprobar('Formación ciudadana y constitucional')">Formación ciudadana y constitucional</div>
+      <div class="ramo bloqueado" id="Ingles 3" onclick="aprobar('Ingles 3')">Ingles 3</div>
+    </div>
+    <div class="semestre" id="sem4">
+      <h2>4° Semestre</h2>
+      <div class="ramo bloqueado" id="Ecuaciones diferenciales" onclick="aprobar('Ecuaciones diferenciales')">Ecuaciones diferenciales</div>
+      <div class="ramo bloqueado" id="Física de campos" onclick="aprobar('Física de campos')">Física de campos</div>
+      <div class="ramo bloqueado" id="Termodinámica I" onclick="aprobar('Termodinámica I')">Termodinámica I</div>
+      <div class="ramo bloqueado" id="Biología para ingenieros" onclick="aprobar('Biología para ingenieros')">Biología para ingenieros</div>
+      <div class="ramo bloqueado" id="Química analítica e instrumental" onclick="aprobar('Química analítica e instrumental')">Química analítica e instrumental</div>
+      <div class="ramo bloqueado" id="Ingles 4" onclick="aprobar('Ingles 4')">Ingles 4</div>
+    </div>
+    <div class="semestre" id="sem5">
+      <h2>5° Semestre</h2>
+      <div class="ramo bloqueado" id="Fenómenos de transporte I" onclick="aprobar('Fenómenos de transporte I')">Fenómenos de transporte I</div>
+      <div class="ramo bloqueado" id="Balance de materia y energía" onclick="aprobar('Balance de materia y energía')">Balance de materia y energía</div>
+      <div class="ramo bloqueado" id="Física de ondas" onclick="aprobar('Física de ondas')">Física de ondas</div>
+      <div class="ramo bloqueado" id="Termodinámica II" onclick="aprobar('Termodinámica II')">Termodinámica II</div>
+      <div class="ramo" id="Ingeniería económica" onclick="aprobar('Ingeniería económica')">Ingeniería económica</div>
+      <div class="ramo bloqueado" id="Inglés 5" onclick="aprobar('Inglés 5')">Inglés 5</div>
+    </div>
+    <div class="semestre" id="sem6">
+      <h2>6° Semestre</h2>
+      <div class="ramo bloqueado" id="Laboratorio integrado de física" onclick="aprobar('Laboratorio integrado de física')">Laboratorio integrado de física</div>
+      <div class="ramo bloqueado" id="Mecánica de fluidos" onclick="aprobar('Mecánica de fluidos')">Mecánica de fluidos</div>
+      <div class="ramo bloqueado" id="Termodinámica química" onclick="aprobar('Termodinámica química')">Termodinámica química</div>
+      <div class="ramo bloqueado" id="Matemáticas especiales" onclick="aprobar('Matemáticas especiales')">Matemáticas especiales</div>
+      <div class="ramo bloqueado" id="Fenómenos de transporte II" onclick="aprobar('Fenómenos de transporte II')">Fenómenos de transporte II</div>
+    </div>
+    <div class="semestre" id="sem7">
+      <h2>7° Semestre</h2>
+      <div class="ramo bloqueado" id="Operaciones con transferencia de calor" onclick="aprobar('Operaciones con transferencia de calor')">Operaciones con transferencia de calor</div>
+      <div class="ramo bloqueado" id="Operaciones con transferencia de masa" onclick="aprobar('Operaciones con transferencia de masa')">Operaciones con transferencia de masa</div>
+      <div class="ramo bloqueado" id="Ingeniería de los materiales" onclick="aprobar('Ingeniería de los materiales')">Ingeniería de los materiales</div>
+      <div class="ramo bloqueado" id="Estadística y diseño de experimentos" onclick="aprobar('Estadística y diseño de experimentos')">Estadística y diseño de experimentos</div>
+      <div class="ramo" id="Ética" onclick="aprobar('Ética')">Ética</div>
+    </div>
+    <div class="semestre" id="sem8">
+      <h2>8° Semestre</h2>
+      <div class="ramo bloqueado" id="Ingeniería de las reacciones químicas" onclick="aprobar('Ingeniería de las reacciones químicas')">Ingeniería de las reacciones químicas</div>
+      <div class="ramo bloqueado" id="Operaciones con solidos" onclick="aprobar('Operaciones con solidos')">Operaciones con solidos</div>
+      <div class="ramo bloqueado" id="Electricidad y electrónica" onclick="aprobar('Electricidad y electrónica')">Electricidad y electrónica</div>
+      <div class="ramo bloqueado" id="Anteproyecto" onclick="aprobar('Anteproyecto')">Anteproyecto</div>
+      <div class="ramo" id="Fundamentos de economía" onclick="aprobar('Fundamentos de economía')">Fundamentos de economía</div>
+      <div class="ramo" id="Línea de profundización I" onclick="aprobar('Línea de profundización I')">Línea de profundización I</div>
+    </div>
+    <div class="semestre" id="sem9">
+      <h2>9° Semestre</h2>
+      <div class="ramo bloqueado" id="Diseño de productos y procesos" onclick="aprobar('Diseño de productos y procesos')">Diseño de productos y procesos</div>
+      <div class="ramo bloqueado" id="Control de procesos" onclick="aprobar('Control de procesos')">Control de procesos</div>
+      <div class="ramo" id="Línea de profundización" onclick="aprobar('Línea de profundización')">Línea de profundización</div>
+      <div class="ramo" id="Electiva profesional" onclick="aprobar('Electiva profesional')">Electiva profesional</div>
+    </div>
+    <div class="semestre" id="sem10">
+      <h2>10° Semestre</h2>
+      <div class="ramo bloqueado" id="Diseño de productos y procesos II" onclick="aprobar('Diseño de productos y procesos II')">Diseño de productos y procesos II</div>
+      <div class="ramo" id="Prácticas académicas" onclick="aprobar('Prácticas académicas')">Prácticas académicas</div>
+    </div>
   </div>
-
   <script src="script.js"></script>
-  <script>
-    const materiasPorSemestre = {
-      1: [
-        'Cálculo Diferencial', 'Álgebra y trigonometría', 'Geometría euclidiana',
-        'Química general', 'Vivamos la universidad', 'Lectoescritura', 'inglés 1'
-      ],
-      2: [
-        'Cálculo integral', 'Geometría vectorial y analítica', 'Descubriendo la física',
-        'Introducción a la ingeniería química', 'Expresión gráfica para ingenieros',
-        'Química inorgánica', 'inglés 2'
-      ],
-      3: [
-        'Cálculo Vectorial', 'Álgebra lineal', 'Física mecánica',
-        'Algoritmos y programación', 'Química orgánica',
-        'Formación ciudadana y constitucional', 'Ingles 3'
-      ],
-      4: [
-        'Ecuaciones diferenciales', 'Física de campos', 'Termodinámica I',
-        'Biología para ingenieros', 'Química analítica e instrumental', 'Ingles 4'
-      ],
-      5: [
-        'Fenómenos de transporte I', 'Balance de materia y energía',
-        'Física de ondas', 'Termodinámica II', 'Ingeniería económica', 'inglés 5'
-      ],
-      6: [
-        'Laboratorio integrado de física', 'Mecánica de fluidos',
-        'Termodinámica química', 'Matemáticas especiales', 'Fenómenos de transporte II'
-      ],
-      7: [
-        'Operaciones con transferencia de calor', 'Operaciones con transferencia de masa',
-        'Ingeniería de los materiales', 'Estadística y diseño de experimentos', 'Ética'
-      ],
-      8: [
-        'Ingeniería de las reacciones químicas', 'Operaciones con solidos',
-        'Electricidad y electrónica', 'Anteproyecto', 'Fundamentos de economía',
-        'Línea de profundización I'
-      ],
-      9: [
-        'Diseño de productos y procesos', 'Control de procesos',
-        'Línea de profundización', 'Electiva profesional'
-      ],
-      10: [
-        'Diseño de productos y procesos II', 'Prácticas académicas'
-      ]
-    };
-
-    const grid = document.getElementById('mallaGrid');
-
-    for (let semestre = 1; semestre <= 10; semestre++) {
-      const contenedor = document.createElement('div');
-      contenedor.className = 'semestre';
-      contenedor.innerHTML = `<h2>${semestre}° Semestre</h2>`;
-
-      materiasPorSemestre[semestre].forEach(materia => {
-        const div = document.createElement('div');
-        div.className = 'ramo bloqueado';
-        div.id = materia;
-        div.textContent = materia;
-        div.onclick = function () { aprobar(materia); };
-        contenedor.appendChild(div);
-      });
-
-      grid.appendChild(contenedor);
-    }
-  </script>
-
   <style>
     h1 {
       font-family: 'Poppins', sans-serif;
@@ -92,3 +109,4 @@
   </style>
 </body>
 </html>
+
