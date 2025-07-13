@@ -132,37 +132,30 @@ function calcularCreditosAprobados() {
   return aprobados.reduce((sum, ramo) => sum + (creditos[ramo] || 0), 0);
 }
 
-// Actualiza qué ramos están desbloqueados o bloqueados según prerrequisitos y créditos especiales
-function actualizarDesbloqueos() {
-  const aprobados = obtenerAprobados();
-  const totalCreditos = calcularCreditosAprobados();
+// Aprobados y bloqueados
+const aprobados = new Set();
 
-  for (const [destino, reqs] of Object.entries(prerequisitos)) {
-    const elem = document.getElementById(destino);
-    if (!elem) continue;
+function aprobar(id) {
+  const ramo = document.getElementById(id);
 
-    // Verificar si se cumplen prerrequisitos normales
-    let puedeDesbloquear = reqs.every(r => aprobados.includes(r));
+  if (ramo.classList.contains("bloqueado")) return; // No hacer nada si está bloqueado
 
-    // Reglas especiales con créditos para ciertos módulos
-    if (destino === 'modulo1') {
-      puedeDesbloquear = totalCreditos >= 90;
-    }
-    if (destino === 'modulo2') {
-      puedeDesbloquear = aprobados.includes('modulo1') && totalCreditos >= 170;
-    }
-    if (destino === 'internado_electivo' || destino === 'internado_electivo1') {
-      puedeDesbloquear = totalCreditos >= 240;
-    }
+  // Si ya está aprobado, no hacer nada
+  if (aprobados.has(id)) return;
 
-    if (!elem.classList.contains('aprobado')) {
-      if (puedeDesbloquear) elem.classList.remove('bloqueado');
-      else elem.classList.add('bloqueado');
-    } else {
-      // Si está aprobado, no debe estar bloqueado
-      elem.classList.remove('bloqueado');
+  // Marcar como aprobado
+  ramo.classList.add("aprobado");
+  aprobados.add(id);
+
+  // Revisar qué ramos dependen de este
+  Object.entries(prerrequisitos).forEach(([ramoDestino, requisitos]) => {
+    if (requisitos.every(r => aprobados.has(r))) {
+      const nodo = document.getElementById(ramoDestino);
+      if (nodo && nodo.classList.contains("bloqueado")) {
+        nodo.classList.remove("bloqueado");
+      }
     }
-  }
+  });
 }
 
 // Maneja el clic para aprobar o desaprobar un ramo (solo si no está bloqueado)
