@@ -116,6 +116,10 @@ const prerequisitos = {
   'Prácticas académicas': [],
 };
 
+function limpiarNombre(nombre) {
+  return nombre.trim().toLowerCase();
+}
+
 // Funciones para guardar y cargar progreso en localStorage
 function obtenerAprobados() {
   const data = localStorage.getItem('mallaAprobados');
@@ -149,14 +153,14 @@ function aprobar(id) {
 
   // Revisar qué ramos dependen de este
   Object.entries(prerrequisitos).forEach(([ramoDestino, requisitos]) => {
-    if (requisitos.every(r => aprobados.has(r))) {
-      const nodo = document.getElementById(ramoDestino);
-      if (nodo && nodo.classList.contains("bloqueado")) {
-        nodo.classList.remove("bloqueado");
-      }
-    }
+     const requisitosCumplidos = requisitos.every(r => aprobados.some(a => limpiarNombre(a) === limpiarNombre(r)));
+     if (requisitosCumplidos) {
+        const nodo = document.getElementById(ramoDestino.trim());
+        if (nodo && nodo.classList.contains("bloqueado")) {
+           nodo.classList.remove("bloqueado");
+        }
+     }
   });
-}
 
 // Maneja el clic para aprobar o desaprobar un ramo (solo si no está bloqueado)
 function aprobar(e) {
@@ -174,6 +178,11 @@ function aprobar(e) {
   }
   guardarAprobados(aprobados);
 
+  function guardarAprobados(aprobados) {
+  const unicos = [...new Set(aprobados.map(limpiarNombre))];
+  localStorage.setItem('mallaAprobados', JSON.stringify(unicos));
+}
+
   actualizarDesbloqueos();
 }
 
@@ -183,11 +192,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const aprobados = obtenerAprobados();
   todosRamos.forEach(ramo => {
-    if (aprobados.includes(ramo.id)) {
-      ramo.classList.add('aprobado');
-    }
-  });
-
+    if (aprobados.some(a => limpiarNombre(a) === limpiarNombre(ramo.id))) {
+  ramo.classList.add('aprobado');
+}
   todosRamos.forEach(ramo => {
     ramo.addEventListener('click', aprobar);
   });
