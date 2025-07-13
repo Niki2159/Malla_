@@ -91,7 +91,7 @@ const prerequisitos = {
   'Física de ondas': ['Física mecánica'],
   'Termodinámica II': ['Termodinámica I'],
   'Ingeniería económica': [],
-  'inglés 5': ['Inglés 4'],
+  'inglés 5': ['inglés 4'],
   'Laboratorio integrado de física': ['Física de ondas', 'Física de campos'],
   'Mecánica de fluidos': ['Fenómenos de transporte I'],
   'Termodinámica química': ['Química analítica e instrumental', 'Termodinámica II', 'Balance de materia y energía'],
