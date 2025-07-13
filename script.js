@@ -116,10 +116,6 @@ const prerequisitos = {
   'Prácticas académicas': [],
 };
 
-function limpiarNombre(nombre) {
-  return nombre.trim().toLowerCase();
-}
-
 // Funciones para guardar y cargar progreso en localStorage
 function obtenerAprobados() {
   const data = localStorage.getItem('mallaAprobados');
@@ -136,31 +132,38 @@ function calcularCreditosAprobados() {
   return aprobados.reduce((sum, ramo) => sum + (creditos[ramo] || 0), 0);
 }
 
-// Aprobados y bloqueados
-const aprobados = new Set();
+// Actualiza qué ramos están desbloqueados o bloqueados según prerrequisitos y créditos especiales
+function actualizarDesbloqueos() {
+  const aprobados = obtenerAprobados();
+  const totalCreditos = calcularCreditosAprobados();
 
-function aprobar(id) {
-  const ramo = document.getElementById(id);
+  for (const [destino, reqs] of Object.entries(prerequisitos)) {
+    const elem = document.getElementById(destino);
+    if (!elem) continue;
 
-  if (ramo.classList.contains("bloqueado")) return; // No hacer nada si está bloqueado
+    // Verificar si se cumplen prerrequisitos normales
+    let puedeDesbloquear = reqs.every(r => aprobados.includes(r));
 
-  // Si ya está aprobado, no hacer nada
-  if (aprobados.has(id)) return;
+    // Reglas especiales con créditos para ciertos módulos
+    if (destino === 'modulo1') {
+      puedeDesbloquear = totalCreditos >= 90;
+    }
+    if (destino === 'modulo2') {
+      puedeDesbloquear = aprobados.includes('modulo1') && totalCreditos >= 170;
+    }
+    if (destino === 'internado_electivo' || destino === 'internado_electivo1') {
+      puedeDesbloquear = totalCreditos >= 240;
+    }
 
-  // Marcar como aprobado
-  ramo.classList.add("aprobado");
-  aprobados.add(id);
-
-  // Revisar qué ramos dependen de este
-  Object.entries(prerrequisitos).forEach(([ramoDestino, requisitos]) => {
-     const requisitosCumplidos = requisitos.every(r => aprobados.some(a => limpiarNombre(a) === limpiarNombre(r)));
-     if (requisitosCumplidos) {
-        const nodo = document.getElementById(ramoDestino.trim());
-        if (nodo && nodo.classList.contains("bloqueado")) {
-           nodo.classList.remove("bloqueado");
-        }
-     }
-  });
+    if (!elem.classList.contains('aprobado')) {
+      if (puedeDesbloquear) elem.classList.remove('bloqueado');
+      else elem.classList.add('bloqueado');
+    } else {
+      // Si está aprobado, no debe estar bloqueado
+      elem.classList.remove('bloqueado');
+    }
+  }
+}
 
 // Maneja el clic para aprobar o desaprobar un ramo (solo si no está bloqueado)
 function aprobar(e) {
@@ -178,11 +181,6 @@ function aprobar(e) {
   }
   guardarAprobados(aprobados);
 
-  function guardarAprobados(aprobados) {
-  const unicos = [...new Set(aprobados.map(limpiarNombre))];
-  localStorage.setItem('mallaAprobados', JSON.stringify(unicos));
-}
-
   actualizarDesbloqueos();
 }
 
@@ -192,9 +190,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const aprobados = obtenerAprobados();
   todosRamos.forEach(ramo => {
-    if (aprobados.some(a => limpiarNombre(a) === limpiarNombre(ramo.id))) {
-  ramo.classList.add('aprobado');
-}
+    if (aprobados.includes(ramo.id)) {
+      ramo.classList.add('aprobado');
+    }
+  });
+
   todosRamos.forEach(ramo => {
     ramo.addEventListener('click', aprobar);
   });
