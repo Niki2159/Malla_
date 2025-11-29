@@ -108,32 +108,6 @@ const prerequisitos = {
   'Diseño de Procesos y Productos II': ['Diseño de Procesos y Productos I']
 };
 
-// Correquisitos de cada ramo (ramos que deben estar cursándose o aprobados)
-const correquisitos = {
-  'Vivamos la Universidad': ['Español Académico'],
-  'Introducción Ingeniería Química': ['Vivamos la Universidad'],
-  'Química Inorgánica': ['Introducción Ingeniería Química'],
-
-  'Algoritmos y Programación': ['Álgebra Lineal'],
-
-  'Termodinámica I': ['English 3', 'Ecuaciones Diferenciales'],
-
-  'Operaciones con Transferencia de Calor': ['Ingeniería de los Materiales'],
-  'Ingeniería de los Materiales': ['Operaciones con Transferencia de Calor'],
-
-  'Operaciones con Transferencia de Masa': [
-    'Operaciones con Transferencia de Calor',
-    'Ingeniería de los Materiales'
-  ],
-
-  'Ingeniería de las Reacciones Químicas': ['Ingeniería de los Materiales'],
-
-  'Operaciones con Sólidos': ['Ingeniería de los Materiales'],
-
-  'Control de Procesos': ['Diseño de Procesos y Productos I'],
-  'Diseño de Procesos y Productos II': ['Control de Procesos']
-};
-
 // Funciones de almacenamiento local
 function obtenerAprobados() {
   const data = localStorage.getItem('mallaAprobados');
