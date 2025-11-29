@@ -169,22 +169,22 @@ function actualizarDesbloqueos() {
   }
 }
 
-// Maneja el clic para aprobar o desaprobar un ramo (solo si no está bloqueado)
-function aprobar(e) {
-  const ramo = e.currentTarget;
-  if (ramo.classList.contains('bloqueado')) return;
+// Maneja el clic para aprobar o desaprobar un ramo por ID
+function aprobar(idRamo) {
+  const ramo = document.getElementById(idRamo);
+  if (!ramo || ramo.classList.contains('bloqueado')) return; // si no existe o está bloqueado, salir
 
   ramo.classList.toggle('aprobado');
 
   const aprobados = obtenerAprobados();
   if (ramo.classList.contains('aprobado')) {
-    if (!aprobados.includes(ramo.id)) aprobados.push(ramo.id);
+    if (!aprobados.includes(idRamo)) aprobados.push(idRamo);
   } else {
-    const idx = aprobados.indexOf(ramo.id);
+    const idx = aprobados.indexOf(idRamo);
     if (idx > -1) aprobados.splice(idx, 1);
   }
-
   guardarAprobados(aprobados);
+
   actualizarDesbloqueos();
 }
 
