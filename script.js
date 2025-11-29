@@ -126,7 +126,7 @@ function calcularCreditosAprobados() {
   return aprobados.reduce((sum, ramo) => sum + (creditos[ramo] || 0), 0);
 }
 
-// Actualiza qué ramos están desbloqueados o bloqueados según prerrequisitos y créditos especiales
+// Actualiza qué ramos están desbloqueados o bloqueados según prerrequisitos y créditos
 function actualizarDesbloqueos() {
   const aprobados = obtenerAprobados();
   const totalCreditos = calcularCreditosAprobados();
@@ -135,27 +135,39 @@ function actualizarDesbloqueos() {
     const elem = document.getElementById(destino);
     if (!elem) continue;
 
-    // Verificar si se cumplen prerrequisitos normales
-    let puedeDesbloquear = reqs.every(r => aprobados.includes(r));
+    let puedeDesbloquear = true;
+    const missing = [];
 
-    // Reglas especiales con créditos para ciertos módulos
-    if (destino === 'modulo1') {
-      puedeDesbloquear = totalCreditos >= 90;
-    }
-    if (destino === 'modulo2') {
-      puedeDesbloquear = aprobados.includes('modulo1') && totalCreditos >= 170;
-    }
-    if (destino === 'internado_electivo' || destino === 'internado_electivo1') {
-      puedeDesbloquear = totalCreditos >= 240;
-    }
+    // Verificar prerrequisitos normales y especiales
+    reqs.forEach(r => {
+      if (r.startsWith("CREDITOS:")) {
+        const need = parseInt(r.split(":")[1]);
+        if (totalCreditos < need) {
+          puedeDesbloquear = false;
+          missing.push(`Créditos requeridos: ${need}`);
+        }
+      } else if (!aprobados.includes(r)) {
+        puedeDesbloquear = false;
+        missing.push(r);
+      }
+    });
 
+    // Actualizar clases
     if (!elem.classList.contains('aprobado')) {
       if (puedeDesbloquear) elem.classList.remove('bloqueado');
       else elem.classList.add('bloqueado');
     } else {
-      // Si está aprobado, no debe estar bloqueado
       elem.classList.remove('bloqueado');
     }
+
+    // Tooltip de materias bloqueadas
+    let tip = elem.querySelector('.tooltip');
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.className = 'tooltip';
+      elem.appendChild(tip);
+    }
+    tip.textContent = missing.length > 0 ? "Falta: " + missing.join(", ") : "";
   }
 }
 
@@ -173,8 +185,8 @@ function aprobar(e) {
     const idx = aprobados.indexOf(ramo.id);
     if (idx > -1) aprobados.splice(idx, 1);
   }
-  guardarAprobados(aprobados);
 
+  guardarAprobados(aprobados);
   actualizarDesbloqueos();
 }
 
