@@ -108,7 +108,7 @@ const prerequisitos = {
   'Diseño de Procesos y Productos II': ['Diseño de Procesos y Productos I']
 };
 
-// Funciones para guardar y cargar progreso en localStorage
+// Funciones de almacenamiento local
 function obtenerAprobados() {
   const data = localStorage.getItem('mallaAprobados');
   return data ? JSON.parse(data) : [];
@@ -118,13 +118,13 @@ function guardarAprobados(aprobados) {
   localStorage.setItem('mallaAprobados', JSON.stringify(aprobados));
 }
 
-// Calcula el total de créditos de ramos aprobados
+// Total de créditos aprobados
 function calcularCreditosAprobados() {
   const aprobados = obtenerAprobados();
   return aprobados.reduce((sum, ramo) => sum + (creditos[ramo] || 0), 0);
 }
 
-// Actualiza qué ramos están desbloqueados o bloqueados según prerrequisitos y créditos
+// Actualiza desbloqueos
 function actualizarDesbloqueos() {
   const aprobados = obtenerAprobados();
   const totalCreditos = calcularCreditosAprobados();
@@ -136,7 +136,6 @@ function actualizarDesbloqueos() {
     let puedeDesbloquear = true;
     const missing = [];
 
-    // Verificar prerrequisitos normales y especiales
     reqs.forEach(r => {
       if (r.startsWith("CREDITOS:")) {
         const need = parseInt(r.split(":")[1]);
@@ -150,7 +149,6 @@ function actualizarDesbloqueos() {
       }
     });
 
-    // Actualizar clases
     if (!elem.classList.contains('aprobado')) {
       if (puedeDesbloquear) elem.classList.remove('bloqueado');
       else elem.classList.add('bloqueado');
@@ -158,7 +156,6 @@ function actualizarDesbloqueos() {
       elem.classList.remove('bloqueado');
     }
 
-    // Tooltip de materias bloqueadas
     let tip = elem.querySelector('.tooltip');
     if (!tip) {
       tip = document.createElement('div');
@@ -169,18 +166,18 @@ function actualizarDesbloqueos() {
   }
 }
 
-// Maneja el clic para aprobar o desaprobar un ramo por ID
-function aprobar(idRamo) {
-  const ramo = document.getElementById(idRamo);
-  if (!ramo || ramo.classList.contains('bloqueado')) return; // si no existe o está bloqueado, salir
+// Maneja clics para aprobar/desaprobar
+function aprobar(event) {
+  const ramo = event.currentTarget;
+  if (!ramo || ramo.classList.contains('bloqueado')) return;
 
   ramo.classList.toggle('aprobado');
 
   const aprobados = obtenerAprobados();
   if (ramo.classList.contains('aprobado')) {
-    if (!aprobados.includes(idRamo)) aprobados.push(idRamo);
+    if (!aprobados.includes(ramo.id)) aprobados.push(ramo.id);
   } else {
-    const idx = aprobados.indexOf(idRamo);
+    const idx = aprobados.indexOf(ramo.id);
     if (idx > -1) aprobados.splice(idx, 1);
   }
   guardarAprobados(aprobados);
@@ -188,7 +185,7 @@ function aprobar(idRamo) {
   actualizarDesbloqueos();
 }
 
-// Al cargar la página, asignar eventos, cargar progreso y actualizar desbloqueos
+// Inicialización al cargar la página
 window.addEventListener('DOMContentLoaded', () => {
   const todosRamos = document.querySelectorAll('.ramo');
 
